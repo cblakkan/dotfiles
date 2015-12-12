@@ -1,0 +1,45 @@
+[core]
+    excludesfile = /Users/cblakkan/.gitignore_global
+    editor = /usr/local/bin/vim
+    pager = less
+[user]
+    name = Cordell Blakkan
+    email = cblakkan@23andme.com
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+[push]
+    default = current
+[pull]
+    rebase = true
+[merge]
+    tool = Kaleidoscope
+    ff = false
+[mergetool]
+    prompt = false
+[diff]
+    tool = vimdiff
+[difftool]
+    prompt = false
+[difftool "Kaleidoscope"]
+    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[mergetool "Kaleidoscope"]
+    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+    trustexitcode = true
+[alias]
+    la = "!git config -l | grep alias | cut -c 7-"
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    ls = log --topo-order --stat --pretty=format:'%C(bold)%C(yellow)Commit:%C(reset) %C(yellow)%H%C(red)%d%n%C(bold)%C(yellow)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold)%C(yellow)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B'
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    fl = log -u
+    find = "!git ls-files | grep -i"
+    grep = grep -Ii
+    st = status -sb
+    cl = clone
+    co = checkout
+    br = branch
+    d = difftool
+    size = count-objects -vH
+[url "git@github.com:"]
+    insteadof = github:

@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+
+DOTFILES_ROOT="$HOME/git/dotfiles"
+DOTFILES_BIN="$DOTFILES_ROOT/bin"
+DOTFILE_DST="$HOME/.dotfiles"
+BASHRC_DST="$HOME/.dotfiles_bashrc"
+
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
+
+eprint (){
+    if [ $? -eq 0 ]
+    then
+        success "$1"
+    else
+        fail "$1"
+    fi
+}
+
+link_file () {
+    local src=$1 dst=$2
+    if [ -f "$dst" ]
+    then
+        rm -f "$dst"
+    fi
+    ln -s "$src" "$dst"
+    eprint "linked $src to $dst"
+}
+
+setup (){
+    echo "Preinstall setup"
+    > $BASHRC_DST
+    if ! grep -q $BASHRC_DST ~/.bash_profile
+    then
+        local NL=$'\\\n'
+        local infectstr="#Added by dotfiles${NL}source ${BASHRC_DST//\//\\/}${NL}"
+        sed -i -- "1s/^/$infectstr/" ~/.bash_profile
+        eprint "Infecting ~/.bash_profile"
+    else
+        success "~/.bash_profile already infected"
+    fi
+}
+
+install_dotfiles () {
+    echo "Installing dotfiles"
+
+    for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink')
+    do
+        dst="$HOME/.$(basename "${src%.*}")"
+        link_file "$src" "$dst"
+    done
+}
+
+
+install_configs () {
+    echo "Installing configs"
+
+    echo "# Configs" >> $BASHRC_DST
+    for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*config.sh')
+    do
+        echo "source $src" >> $BASHRC_DST
+        eprint "$src"
+    done
+}
+
+install_aliases () {
+    echo "Installing alias files"
+
+    echo "# Aliases" >> $BASHRC_DST
+    for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*aliases.sh')
+    do
+        echo "source $src" >> $BASHRC_DST
+        eprint "$src"
+    done
+}
+
+finish() {
+    source $BASHRC_DST
+}
+
+setup
+install_dotfiles
+install_configs
+install_aliases
+finish
