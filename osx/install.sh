@@ -262,4 +262,4 @@ defaults write com.tapbots.TweetbotMac OpenURLsDirectly -bool true
 # Prompt for restart                                                          #
 ###############################################################################
 
-echo "Done. Now restart your laptop"
+echo "Done. A restart may be necessary for OS X changes to apply"
