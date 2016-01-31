@@ -11,15 +11,12 @@ $ ./dotfiles/bin/dotfiles
 Update configs
 --------------
 ```bash
-$ dotfiles
+$ dotfiles [-f]
 ```
 
 
 TODO
 ----
 
-- Sublime Text configs
 - Vim settings
 - pep8 configs
-- Brew setup
-- Allow for install.sh to be run just once. Then also allow force install `dotfiles -f|--force`

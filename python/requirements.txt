@@ -1,0 +1,11 @@
+ansible
+awscli
+boto3
+docopt
+eg
+funcy
+pytest
+PyYAML
+requests
+tox
+whatportis

@@ -35,10 +35,14 @@
     fl = log -u
     find = "!git ls-files | grep -i"
     grep = grep -Ii
-    st = status -sb
-    cl = clone
-    co = checkout
     br = branch
+    cl = clone
+    ci = commit
+    cp = cherry-pick
+    co = checkout
+    pl = pull
+    st = status -sb
+    f = fetch
     d = difftool
     size = count-objects -vH
 [url "git@github.com:"]

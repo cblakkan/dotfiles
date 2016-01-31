@@ -1,28 +1,17 @@
 #!/usr/bin/env bash
 
-DOTFILES_ROOT="$HOME/git/dotfiles"
-DOTFILES_BIN="$DOTFILES_ROOT/bin"
-DOTFILE_DST="$HOME/.dotfiles"
-BASHRC_DST="$HOME/.dotfiles_bashrc"
+export DOTFILES_ROOT="$HOME/git/dotfiles"
+export DOTFILES_BIN="$DOTFILES_ROOT/bin"
+export DOTFILE_DST="$HOME/.dotfiles"
+export BASHRC_DST="$HOME/.dotfiles_bashrc"
 
-success () {
-  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
-}
+. print_functions.sh
 
-fail () {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
-  echo ''
-  exit
-}
-
-eprint (){
-    if [ $? -eq 0 ]
-    then
-        success "$1"
-    else
-        fail "$1"
-    fi
-}
+FORCE_INSTALL=0
+if [ "$1" = "-f" ]
+then
+    FORCE_INSTALL=1
+fi
 
 link_file () {
     local src=$1 dst=$2
@@ -31,10 +20,10 @@ link_file () {
         rm -f "$dst"
     fi
     ln -s "$src" "$dst"
-    eprint "linked $src to $dst"
+    print_result "linked $src to $dst"
 }
 
-setup (){
+setup () {
     echo "# Preinstall setup"
     > $BASHRC_DST
     if ! grep -q $BASHRC_DST ~/.bash_profile
@@ -42,9 +31,9 @@ setup (){
         local NL=$'\\\n'
         local infectstr="# Added by dotfiles${NL}source ${BASHRC_DST//\//\\/}${NL}"
         sed -i -- "1s/^/$infectstr/" ~/.bash_profile
-        eprint "Infecting ~/.bash_profile"
+        print_result "Infecting ~/.bash_profile"
     else
-        success "~/.bash_profile already infected"
+        print_ok "~/.bash_profile already infected"
     fi
 }
 
@@ -66,7 +55,7 @@ install_configs () {
     for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*config.sh')
     do
         echo "source $src" >> $BASHRC_DST
-        eprint "$src"
+        print_result "$src"
     done
 }
 
@@ -77,15 +66,36 @@ install_aliases () {
     for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*aliases.sh')
     do
         echo "source $src" >> $BASHRC_DST
-        eprint "$src"
+        print_result "$src"
     done
 }
 
 run_installers () {
     for installer in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'install.sh')
     do
-        echo "# Running $installer"
-        $installer
+        folder=$(dirname $installer | grep -oE '[^/]+$')
+        already_installed_file="${installer/install.sh/.install.sh}"
+
+        echo "# Installing $folder"
+        if [ ! -e "$already_installed_file" ] || [ FORCE_INSTALL = 1 ]
+        then
+            $installer
+            print_result "# Running $installer"
+            touch $already_installed_file
+        else
+            print_skip "# Already installed. Reinvoke with -f to reinstall"
+        fi
+    done
+}
+
+run_updaters () {
+    for updater in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'update.sh')
+    do
+        folder=$(dirname $updater | grep -oE '[^/]+$')
+
+        echo "# Updating $folder"
+        $updater
+        print_result "# Running $updater"
     done
 }
 
@@ -98,4 +108,5 @@ install_dotfiles
 install_configs
 install_aliases
 run_installers
+run_updaters
 finish

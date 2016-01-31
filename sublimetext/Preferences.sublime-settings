@@ -1,0 +1,72 @@
+{
+    "binary_file_patterns":
+    [
+        "*.jpg",
+        "*.jpeg",
+        "*.png",
+        "*.gif",
+        "*.ttf",
+        "*.tga",
+        "*.dds",
+        "*.ico",
+        "*.eot",
+        "*.pdf",
+        "*.swf",
+        "*.jar",
+        "*.zip"
+    ],
+    "color_scheme": "Packages/User/SublimeLinter/Espresso Soda (SL).tmTheme",
+    "ensure_newline_at_eof_on_save": true,
+    "file_exclude_patterns":
+    [
+        "*.pyc",
+        "*.scssc",
+        "*.pyo",
+        "*.exe",
+        "*.dll",
+        "*.obj",
+        "*.o",
+        "*.a",
+        "*.lib",
+        "*.so",
+        "*.dylib",
+        "*.ncb",
+        "*.sdf",
+        "*.suo",
+        "*.pdb",
+        "*.idb",
+        ".DS_Store",
+        "*.class",
+        "*.psd",
+        "*.db",
+        "*.sublime-workspace"
+    ],
+    "fold_buttons": false,
+    "folder_exclude_patterns":
+    [
+        ".svn",
+        ".git",
+        ".vagrant",
+        ".hg",
+        "CVS",
+        ".tox",
+        "*.egg-info",
+        ".eggs",
+        "dist",
+        "__pycache__",
+        "venv",
+        "ve",
+        "static"
+    ],
+    "font_face": "Source Code Pro",
+    "font_size": 16,
+    "ignored_packages":
+    [
+        "Vintage"
+    ],
+    "show_tab_close_buttons": false,
+    "theme": "Soda Light 3.sublime-theme",
+    "translate_tabs_to_spaces": true,
+    "trim_trailing_white_space_on_save": true,
+    "word_wrap": "false"
+}
