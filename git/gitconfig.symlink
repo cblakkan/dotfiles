@@ -44,6 +44,7 @@
     st = status -sb
     f = fetch
     d = difftool
+    sortedtags = "!git for-each-ref --format='%(*committerdate:raw)%(committerdate:raw) %(refname) %(*objectname) %(objectname)' refs/tags | sort -n | awk '{ print $4, $3; }'" 
     size = count-objects -vH
 [url "git@github.com:"]
     insteadof = github:
