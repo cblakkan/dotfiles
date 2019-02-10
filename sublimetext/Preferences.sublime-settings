@@ -15,7 +15,7 @@
         "*.jar",
         "*.zip"
     ],
-    "color_scheme": "Packages/User/SublimeLinter/Espresso Soda (SL).tmTheme",
+    "color_scheme": "Packages/User/Espresso Soda.tmTheme",
     "ensure_newline_at_eof_on_save": true,
     "file_exclude_patterns":
     [

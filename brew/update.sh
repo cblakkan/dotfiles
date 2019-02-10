@@ -8,7 +8,6 @@ brew install ack \
              bash-completion \
              git \
              graphviz \
-             keybase \
              libyaml \
              mercurial \
              node \

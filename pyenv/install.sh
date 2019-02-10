@@ -9,7 +9,7 @@ else
     print_ok "~/.bash_profile already infected with pyenv"
 fi
 
-pyenv install -s 2.7.11
-pyenv install -s 3.5.1
+pyenv install -s 2.7.15
+pyenv install -s 3.7.2
 pyenv rehash
-pyenv global 2.7.11
+pyenv global 2.7.15
